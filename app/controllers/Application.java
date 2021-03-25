@@ -1,14 +1,20 @@
 package controllers;
 
 import play.mvc.Controller;
+import models.Tache;
+import java.util.List;
 
 public class Application extends Controller {
 
     // Affiche toutes les tâches (voir variable taches) dans le template views/listTache.html
+    @play.db.jpa.Transactional
     public static void listTache() {
-        // A COMPLETER
-        // ...
-		render();
+
+        List<Tache> taches = Tache.findAll();
+        long nb = Tache.count();
+        /*Query query = JPA.em().createQuery("select * from Tache");
+        List<Tache> articles = query.getResultList();*/
+		render(taches);
     }
 
     // Affiche le template views/ajouterTacheForm.html (formulaire d'ajout d'une tâche)
