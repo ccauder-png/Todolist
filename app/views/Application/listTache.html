@@ -5,13 +5,22 @@
 
 #{if taches}
 <ul>
-    *{ A COMPLETER }*
-	<li id="*{ A COMPLETER }*">
-	    <input type="checkbox">
-	    <span class="title">*{ A COMPLETER }*</span>
-	    <a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
-	    <a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
+    #{list items:taches, as:'tache'}
+	<li id="${tache_index}">
+        <p>${tache.id}</p>
+	    <form action="@{Application.validerTache(tache.id)}" method="POST">
+            #{if tache.prise}
+            <input type="checkbox" checked>
+            #{/if}
+            #{else}
+            <input type="checkbox">
+            #{/else}
+            <span class="title">${tache.contenue}</span>
+	        <a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
+	        <a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
+        </form>
 	</li>
+    #{/list}
 </ul>
 #{/if}
 #{else}

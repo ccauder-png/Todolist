@@ -6,33 +6,30 @@ import java.util.List;
 
 public class Application extends Controller {
 
-    // Affiche toutes les tâches (voir variable taches) dans le template views/listTache.html
-    @play.db.jpa.Transactional
+    // Affiche toutes les tâches (voir variable taches) dans le template views/listTache.htm
     public static void listTache() {
-
         List<Tache> taches = Tache.findAll();
-        long nb = Tache.count();
-        /*Query query = JPA.em().createQuery("select * from Tache");
-        List<Tache> articles = query.getResultList();*/
 		render(taches);
     }
 
     // Affiche le template views/ajouterTacheForm.html (formulaire d'ajout d'une tâche)
     public static void ajouterTacheForm() {
-        // A COMPLETER
-        // ...
+        render();
     }
 
     // Ajoute une nouvelle tâche en base de données et affiche le template views/ajouterTache.html
-    public static void ajouterTache() {
-        // A COMPLETER
-        // ...
+    public static void ajouterTache(String contenue) {
+        Tache tache = new Tache(contenue);
+        tache.save();
+        render();
     }
 
     // Change le statut d'une tâche en base de données
     public static void validerTache(Long id) {
-    	// A COMPLETER
-        // ...   
+        Tache tache = Tache.findById(id);
+        tache.prise = !tache.prise;
+        tache.save();
+    	render();
     }
 
     // Supprime une tâche en base de données

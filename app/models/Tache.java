@@ -10,4 +10,9 @@ public class Tache extends Model {
     public Long id;*/
 
 	public String contenue;
+    public boolean prise = false;
+
+    public Tache(String contenue) {
+        this.contenue = contenue;
+    }
 }
