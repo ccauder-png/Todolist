@@ -18,30 +18,37 @@ public class Application extends Controller {
     }
 
     // Ajoute une nouvelle tâche en base de données et affiche le template views/ajouterTache.html
-    public static void ajouterTache(String contenue) {
-        Tache tache = new Tache(contenue);
+    public static void ajouterTache(String title) {
+        Tache tache = new Tache(title);
         tache.save();
         render();
     }
 
     // Change le statut d'une tâche en base de données
-    public static void validerTache(Long id) {
+    public static void validerTache() {
+        long id = params.get("id", Long.class);
         Tache tache = Tache.findById(id);
-        tache.prise = !tache.prise;
+        tache.valider = true;
         tache.save();
-    	render();
     }
 
     // Supprime une tâche en base de données
     public static void supprimerTache(Long id) {
-        // A COMPLETER
-        // ...
+        Tache tache = Tache.findById(id);
+        if(tache != null) {
+            tache.delete();
+        }
+        renderJSON(tache);
     }
 
     // Modifie une tâche en base de données
     public static void editTache(Long id, String title) {
-        // A COMPLETER
-        // ...
+        Tache tache = Tache.findById(id);
+        if(tache != null) {
+            tache.contenue = title;
+            tache.save();
+        }
+        renderJSON(tache);
     }
 
 }

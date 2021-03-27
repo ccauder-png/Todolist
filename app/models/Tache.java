@@ -5,12 +5,8 @@ import javax.persistence.Entity;
 
 @Entity
 public class Tache extends Model {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;*/
-
 	public String contenue;
-    public boolean prise = false;
+    public boolean valider = false;
 
     public Tache(String contenue) {
         this.contenue = contenue;

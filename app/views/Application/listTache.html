@@ -6,19 +6,11 @@
 #{if taches}
 <ul>
     #{list items:taches, as:'tache'}
-	<li id="${tache_index}">
-        <p>${tache.id}</p>
-	    <form action="@{Application.validerTache(tache.id)}" method="POST">
-            #{if tache.prise}
-            <input type="checkbox" checked>
-            #{/if}
-            #{else}
-            <input type="checkbox">
-            #{/else}
-            <span class="title">${tache.contenue}</span>
-	        <a href="#" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
-	        <a href="#" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
-        </form>
+	<li id="${tache.id}">
+        <input id="${tache.id}" type="checkbox">
+        <span class="title">${tache.contenue}</span>
+	    <a href="#" id="${tache.id}" class="edit"><img src="@{'/public/images/edit.png'}" alt="modifier la tache" width="10" height="10"></a>
+	    <a href="#" id="${tache.id}" class="del"><img src="@{'/public/images/delete.png'}" alt="supprimer la tache" width="10" height="10"></a>
 	</li>
     #{/list}
 </ul>
@@ -65,12 +57,10 @@
         var confirmSuppr = confirm('Supprimer la tâche ?');
         // Si click sur ok, requête ajax vers serveur pour supprimer la tâche
         if(confirmSuppr) {
-            // A COMPLETER
-            // ...
             $.ajax({
-                url: '',
-                type: '',
-                data: {},
+                url: '@{Application.supprimerTache()}',
+                type: 'DELETE',
+                data: {id: $(this).attr('id')},
                 success: function(result) {
                     $('#' + result.id).remove();
                 }
@@ -88,14 +78,12 @@
         var newTitle = prompt('Tâche : ', $(this).prev().text());
         // Si click sur ok, requête ajax vers serveur pour modifier la tâche
         if(newTitle) {
-        	// A COMPLETER
-        	// ...
             $.ajax({
-                url: '',
-                type: '',
-                data: {},
+                url: '@{Application.editTache()}',
+                type: 'PUT',
+                data: {id: $(this).attr('id'), title: newTitle},
                 success: function(result) {
-                    $('#' + result.id + ' span').text(result.title);
+                    $('#' + result.id + ' span').text(result.contenue);
                 }
             });
         }
